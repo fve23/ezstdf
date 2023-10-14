@@ -1,0 +1,10 @@
+venv/
+*.stdf
+*.atdf
+*.xlsx
+.idea/
+pyproject.toml
+*.egg-info
+__pycache__
+*.pyc
+*.temp
