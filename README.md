@@ -38,3 +38,10 @@ Export as Excel. Each sheet is a difference record, and each row a sub-record.
 ```python
 stdf.to_excel("test.xlsx")
 ```
+
+## History
+- v0.0.1: initial release
+- v0.0.2: fixed meta info in pypi
+- v0.0.3:
+  - better tolerance to illegal characters in strings
+  - fixed parsing of jx and kx fields

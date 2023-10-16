@@ -61,13 +61,15 @@ stdf_record_parsers = {
     StdfRecordType.hbr: (parse_u8, parse_u8, parse_u16, parse_u32, parse_u8, parse_str),
     StdfRecordType.sbr: (parse_u8, parse_u8, parse_u16, parse_u32, parse_u8, parse_str),
     StdfRecordType.pmr: (parse_u16, parse_u16, parse_str, parse_str, parse_str, parse_u8, parse_u8),
-    StdfRecordType.pgr: (parse_u16, parse_str, parse_u16, parse_u16_array),
+    StdfRecordType.pgr: (parse_u16, parse_str, parse_u16, parse_u16_array_kx),
     StdfRecordType.plr: (
-        parse_u16, parse_u16_array, parse_u16_array, parse_u8_array, parse_str_array, parse_str_array, parse_str_array,
+        parse_u16, parse_u16_array_kx, parse_u16_array_kx, parse_u8_array_kx,
+        parse_str_array_kx, parse_str_array_kx, parse_str_array_kx,
         parse_str_array),
     StdfRecordType.rdr: (parse_u16, parse_u16_array),
     StdfRecordType.sdr: (
-        parse_u8, parse_u8, parse_u8, parse_u8_array, parse_str, parse_str, parse_str, parse_str, parse_str, parse_str,
+        parse_u8, parse_u8, parse_u8, parse_u8_array_kx, parse_str, parse_str, parse_str,
+        parse_str, parse_str, parse_str,
         parse_str, parse_str, parse_str, parse_str, parse_str, parse_str, parse_str, parse_str, parse_str, parse_str),
     StdfRecordType.wir: (parse_u8, parse_u8, parse_date, parse_str),
     StdfRecordType.wrr: (
@@ -90,7 +92,8 @@ stdf_record_parsers = {
     StdfRecordType.ftr: (
         parse_u32, parse_u8, parse_u8, parse_u8, parse_u8, parse_u32, parse_u32, parse_u32, parse_u32, parse_i32,
         parse_i32,
-        parse_i16, parse_u16, parse_u16, parse_u16_array, parse_u8, parse_bit_fields, parse_str, parse_str, parse_str,
+        parse_i16, parse_u16, parse_u16, parse_u16_array_jx, parse_u8_array_jx,
+        parse_u16_array_kx, parse_u8_array_kx, parse_str, parse_bit_fields, parse_str, parse_str,
         parse_str, parse_str, parse_str, parse_str, parse_u8, parse_bit_fields),
     StdfRecordType.bps: (parse_str,),
     StdfRecordType.eps: (),

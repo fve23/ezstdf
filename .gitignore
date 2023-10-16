@@ -8,3 +8,5 @@ pyproject.toml
 __pycache__
 *.pyc
 *.temp
+dist/
+temp/

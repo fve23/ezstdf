@@ -5,6 +5,7 @@ from .stdf_cst import StdfRecordType, stdf_record_fields, stdf_record_parsers
 from .atdf_cst import atdf_record_fields
 import re
 from datetime import datetime
+from .parsers import ParserDataByRef
 
 
 """
@@ -61,12 +62,13 @@ class StdfRecord:
             fields = None
         self.df = pd.DataFrame(columns=fields)
 
-    def parse_data(self, data: io.BytesIO, byte_order):
+    def parse_data(self, data: io.BytesIO, byte_order, data_by_ref: ParserDataByRef):
         if self.parsers:
             values = []
             prev_value = None
+            latest_valid_int = None
             for f in self.parsers:
-                prev_value = f(data, byte_order, prev_value)
+                prev_value = f(data, byte_order, prev_value, data_by_ref)
                 values.append(prev_value)
             self._temp_rows.append(values)
 
@@ -177,6 +179,7 @@ class StdfReader(StdfReaderBase):
             byte_order = self.byte_order
         stream.seek(0)
         # -- Parse all the records --
+        data_by_ref = ParserDataByRef()
         while True:
             temp = stream.read(2)
             if b'' == temp:
@@ -193,7 +196,7 @@ class StdfReader(StdfReaderBase):
                 # create a new empty record
                 record = StdfRecord(rec_typ, rec_sub)
                 self.records[(rec_typ, rec_sub)] = record
-            record.parse_data(io.BytesIO(record_data), byte_order)
+            record.parse_data(io.BytesIO(record_data), byte_order, data_by_ref)
         for rec in self.records.values():
             rec.finalize()
 
@@ -209,7 +212,7 @@ class StdfReader(StdfReaderBase):
             if rec.name == name:
                 return rec
 
-    def __parse_line(self, line, separator):
+    def __parse_line(self, line, separator, data_by_ref: ParserDataByRef):
         if not line:
             return
         rec_type = line[:3]
@@ -231,6 +234,7 @@ class StdfReader(StdfReaderBase):
         """
         separator = None
         current_record = None
+        data_by_ref = ParserDataByRef()
         while True:
             line = stream.readline()
             if not line:
@@ -247,11 +251,11 @@ class StdfReader(StdfReaderBase):
                 # line continuation
                 current_record += line
             elif line[3] == ":":
-                self.__parse_line(current_record, separator)
+                self.__parse_line(current_record, separator, data_by_ref)
                 current_record = line
             else:
                 raise Exception(f"Invalid line {line}")
         if current_record:
-            self.__parse_line(current_record, separator)
+            self.__parse_line(current_record, separator, data_by_ref)
         for rec in self.records.values():
             rec.finalize()
