@@ -148,3 +148,8 @@ class StdfReaderBase:
     def mir(self) -> pd.DataFrame:
         # Master Information Record
         return self.get_record(StdfRecordType.mir)
+
+    @property
+    def mpr(self) -> pd.DataFrame:
+        # Master Information Record
+        return self.get_record(StdfRecordType.mpr)
