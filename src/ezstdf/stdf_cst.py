@@ -48,7 +48,13 @@ class StdfRecordType(Enum):
 
 
 stdf_record_parsers = {
-    StdfRecordType.mpr: (None,),  # TODO
+    StdfRecordType.mpr: (
+        parse_u32, parse_u8, parse_u8, parse_u8, parse_u8,
+        parse_u16, parse_u16, parse_nibble_array_jx, parse_float_array_kx,
+        parse_str, parse_str,
+        parse_byte, parse_i8, parse_i8, parse_i8, parse_float, parse_float, parse_float, parse_float,
+        parse_u16_array_jx, parse_str, parse_str, parse_str, parse_str, parse_str, parse_float, parse_float
+    ),
     StdfRecordType.far: (parse_u8, parse_u8),
     StdfRecordType.atr: (parse_date, parse_str),
     StdfRecordType.mir: (
@@ -64,9 +70,8 @@ stdf_record_parsers = {
     StdfRecordType.pgr: (parse_u16, parse_str, parse_u16, parse_u16_array_kx),
     StdfRecordType.plr: (
         parse_u16, parse_u16_array_kx, parse_u16_array_kx, parse_u8_array_kx,
-        parse_str_array_kx, parse_str_array_kx, parse_str_array_kx,
-        parse_str_array),
-    StdfRecordType.rdr: (parse_u16, parse_u16_array),
+        parse_str_array_kx, parse_str_array_kx, parse_str_array_kx, parse_str_array_kx),
+    StdfRecordType.rdr: (parse_u16, parse_u16_array_kx),
     StdfRecordType.sdr: (
         parse_u8, parse_u8, parse_u8, parse_u8_array_kx, parse_str, parse_str, parse_str,
         parse_str, parse_str, parse_str,
@@ -103,6 +108,11 @@ stdf_record_parsers = {
 
 
 stdf_record_fields = {
+    StdfRecordType.mpr: (
+        'TEST_NUM', 'HEAD_NUM', 'SITE_NUM', 'TEST_FLG', 'PARM_FLG', 'RTN_ICNT', 'RSLT_CNT', 'RTN_STAT', 'RTN_RSLT',
+        'TEST_TXT', 'ALARM_ID', 'OPT_FLAG', 'RES_SCAL', 'LLM_SCAL', 'HLM_SCAL', 'LO_LIMIT', 'HI_LIMIT', 'START_IN',
+        'INCR_IN', 'RTN_INDX', 'UNITS', 'UNITS_IN', 'C_RESFMT', 'C_LLMFMT', 'C_HLMFMT', 'LO_SPEC', 'HI_SPEC'
+        ),
     StdfRecordType.far: ('CPU_TYPE', 'STDF_VER'),
     StdfRecordType.atr: ('MOD_TIM', 'CMD_LINE'),
     StdfRecordType.mir: (

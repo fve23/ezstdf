@@ -33,13 +33,12 @@ SOFTWARE.
 
 class StdfRecord:
     # -- This is a list of record types that are supported --
-    # should be ok: pmr, atr, wir, wrr, wcr, bps
-    # not sure: pgr, plr, rdr, gdr
-    # not supported: mpr, ftr
-    parsable_record_types = (
-        "far", "atr", "mir", "mrr", "pcr", "hbr", "sbr", "pmr", "sdr", "wir", "wrr", "wcr",
-        "pir", "prr", "tsr", "ptr", "bps", "eps", "dtr"
-    )
+    # not sure: gdr
+    # parsable_record_types = (
+    #     "far", "atr", "mir", "mrr", "pcr", "hbr", "sbr", "pmr", "sdr", "wir", "wrr", "wcr",
+    #     "pir", "prr", "tsr", "ptr", "bps", "eps", "dtr", "ftr", "mpr"
+    # )
+    parsable_record_types = None  # None -> parse all record types
     prog_date = re.compile(r"[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2} [0-9]{1,2}-[a-zA-Z]{3}-[0-9]{2,4}")
     prog_float = re.compile(r"[-+]?([0-9]*[.])?[0-9]+([eE][-+]?\d+)?")
 

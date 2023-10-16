@@ -45,3 +45,4 @@ stdf.to_excel("test.xlsx")
 - v0.0.3:
   - better tolerance to illegal characters in strings
   - fixed parsing of jx and kx fields
+  - support for mpr

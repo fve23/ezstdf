@@ -42,6 +42,14 @@ def parse_float(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
     return None
 
 
+def parse_float_array_kx(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
+    length = data_by_ref.latest_valid_unsigned
+    temp = []
+    for _ in range(length):
+        temp.append(parse_float(data, byte_order, prev_value, data_by_ref))
+    return temp
+
+
 def parse_double(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
     x = data.read(8)
     if len(x) == 8:
@@ -109,6 +117,13 @@ def parse_u8(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
     return x
 
 
+def parse_byte(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
+    x = data.read(1)
+    if b'' == x:
+        return None
+    return x[0]
+
+
 def parse_u8_array(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
     temp = []
     length = data.read(1)[0]
@@ -122,6 +137,24 @@ def parse_u8_array_kx(data, byte_order, prev_value, data_by_ref: ParserDataByRef
     length = data_by_ref.latest_valid_unsigned
     for _ in range(length):
         temp.append(data.read(1)[0])
+    return temp
+
+
+def parse_nibble_array(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
+    temp = []
+    length = data.read(1)[0]
+    for _ in range(length):
+        x = data.read(1)[0]
+        temp.append(x)  # TODO
+    return temp
+
+
+def parse_nibble_array_jx(data, byte_order, prev_value, data_by_ref: ParserDataByRef):
+    temp = []
+    length = data_by_ref.previous_valid_unsigned
+    for _ in range(length):
+        x = data.read(1)[0]
+        temp.append(x)  # TODO
     return temp
 
 
